@@ -91,7 +91,6 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({
     if (details) {
       form.reset(details);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [details]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {

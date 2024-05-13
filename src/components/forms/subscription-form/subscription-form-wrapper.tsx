@@ -72,7 +72,6 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
       }
     }
     createSecret()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, selectedPriceId, customerId])
 
   return (

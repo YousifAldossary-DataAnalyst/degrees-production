@@ -64,7 +64,6 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
     if (defaultData) {
       form.reset({ name: defaultData.name, pathName: defaultData.pathName })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultData])
 
   const onSubmit = async (values: z.infer<typeof FunnelPageSchema>) => {

@@ -61,7 +61,6 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({
       })
     }
     
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultData])
 
   const isLoading = form.formState.isLoading

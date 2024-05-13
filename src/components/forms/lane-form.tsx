@@ -70,7 +70,6 @@ const LaneForm: React.FC<CreateLaneFormProps> = ({
         name: defaultData.name || '',
       })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultData])
 
   const isLoading = form.formState.isLoading
