@@ -128,7 +128,6 @@ const UserDetails = ({ id, type, userData, subAccounts }: Props) => {
     if (userData) {
       form.reset(userData);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData, data]);
 
   const onChangePermission = async (

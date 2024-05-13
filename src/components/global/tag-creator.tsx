@@ -52,7 +52,6 @@ const TagCreator = ({ getSelectedTags, subAccountId, defaultTags }: Props) => {
 
   useEffect(() => {
     getSelectedTags(selectedTags)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTags])
 
   useEffect(() => {
