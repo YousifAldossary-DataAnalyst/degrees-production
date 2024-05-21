@@ -367,16 +367,16 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
           //   icon: 'chip',
           //   link: `/subaccount/${subAccount.id}/automations`,
           // },
-          // {
-          //   name: 'Connections',
-          //   icon: 'link',
-          //   link: `/subaccount/${subAccount.id}/connections`,
-          // },
-          // {
-          //   name: 'Workflows',
-          //   icon: 'chip',
-          //   link: `/subaccount/${subAccount.id}/workflows`,
-          // },
+          {
+            name: 'Connections',
+            icon: 'link',
+            link: `/subaccount/${subAccount.id}/connections`,
+          },
+          {
+            name: 'Workflows',
+            icon: 'chip',
+            link: `/subaccount/${subAccount.id}/workflows`,
+          },
           {
             name: 'Pipelines',
             icon: 'flag',
