@@ -5,6 +5,7 @@ import { Option } from "@/components/ui/multiple-selector";
 import { db } from "@/lib/db";
 import { auth, currentUser } from "@clerk/nextjs";
 import SubaccountPageId from "../../../page";
+import { SubAccount, Workflows } from "@prisma/client";
 
 export const getGoogleListener = async () => {
   const { userId } = auth();
@@ -156,12 +157,12 @@ export const onGetWorkflows = async () => {
 export const onCreateWorkflow = async (
   name: string,
   description: string,
-  subaccountId: string
+  defaultData?: SubAccount
 ) => {
   const user = await currentUser();
-  const subaccount = await db.subAccount.findFirst({
+  const subaccount = await db.subAccount.findUnique({
     where: {
-      id: subaccountId,
+      id: defaultData?.id,
     },
   });
 
@@ -172,7 +173,7 @@ export const onCreateWorkflow = async (
         userId: user.id,
         name,
         description,
-        subAccountId: subaccount?.id,
+        subAccountId: subaccount.id,
       },
     }
   //console.log(workflow)
