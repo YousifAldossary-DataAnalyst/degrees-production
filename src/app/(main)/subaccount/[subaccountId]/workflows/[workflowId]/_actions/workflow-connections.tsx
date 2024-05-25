@@ -83,7 +83,7 @@ export const onCreateNodeTemplate = async (
 
       if (channelList) {
         //remove duplicates before insert
-        const NonDuplicated = channelList.slackChannels?.filter(
+        const NonDuplicated = channelList.slackChannels.filter(
           (channel) => channel !== channels![0].value
         );
 

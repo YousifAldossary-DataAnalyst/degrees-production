@@ -577,7 +577,7 @@ model Workflows {
   discordTemplate   String?
   notionTemplate    String?
   slackTemplate     String?
-  slackChannels     String?
+  slackChannels     String[]
   slackAccessToken  String?
   notionAccessToken String?
   notionDbId        String?
