@@ -54,7 +54,8 @@ export async function GET(req: NextRequest) {
       id: subaccountId,
     },
   });
+  
   return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccountId}connections`
+    `${process.env.NEXT_PUBLIC_URL}/subaccount/199a4d01-f507-46fb-a2e8-c29a2627a8e7/connections`
   );
 }
