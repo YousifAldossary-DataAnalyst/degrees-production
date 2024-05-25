@@ -43,18 +43,10 @@ export async function GET(req: NextRequest) {
       console.log(databaseId);
 
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
+        `${process.env.NEXT_PUBLIC_URL}/ac6310e4-3c29-4f4b-b4a3-341a0982f424/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
       );
     }
   }
-
-  let subaccountId = "";
-  const subaccount = db.subAccount.findFirst({
-    where: {
-      id: subaccountId,
-    },
-  });
-  
   return NextResponse.redirect(
     `${process.env.NEXT_PUBLIC_URL}/subaccount/ac6310e4-3c29-4f4b-b4a3-341a0982f424/connections`
   );
