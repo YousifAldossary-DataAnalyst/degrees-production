@@ -165,6 +165,8 @@ export const verifyAndAcceptInvitation = async () => {
       updatedAt: new Date(),
       localGoogleId: null,
       googleResourceId: null,
+      credits: null,
+      tier: null
     })
     
     await saveActivityLogsNotifications({
