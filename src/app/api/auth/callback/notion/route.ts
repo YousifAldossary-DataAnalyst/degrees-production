@@ -56,6 +56,6 @@ export async function GET(req: NextRequest) {
   });
   
   return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_URL}/subaccount/199a4d01-f507-46fb-a2e8-c29a2627a8e7/connections`
+    `${process.env.NEXT_PUBLIC_URL}/subaccount/ac6310e4-3c29-4f4b-b4a3-341a0982f424/connections`
   );
 }
