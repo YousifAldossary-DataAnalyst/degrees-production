@@ -109,7 +109,7 @@ const onUserConnections = async () => {
 
   return (
     <BlurPage>
-      <div className="absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
+      {/* <div className="absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
           <Card>
             <CardHeader>
               <CardTitle>Soon...</CardTitle>
@@ -118,8 +118,7 @@ const onUserConnections = async () => {
               </CardDescription>
             </CardHeader>
           </Card>
-        </div>
-      {" "}
+        </div> */}
       <div className="relative flex flex-col gap-4">
         <h1 className="sticky top-0 z-[10] flex items-center justify-between border-b bg-background/50 p-6 text-4xl backdrop-blur-lg">
           Connections
