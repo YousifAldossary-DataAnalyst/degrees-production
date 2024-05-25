@@ -57,6 +57,7 @@ const ContentBasedOnTitle = ({
       const response: { data: { message: { files: any } } } = await axios.get(
         '/api/drive'
       )
+      //The files is an array. and message is not storing the message but files is.
       if (response) {
         console.log(response.data.message.files[0])
         toast.message("Fetched File")

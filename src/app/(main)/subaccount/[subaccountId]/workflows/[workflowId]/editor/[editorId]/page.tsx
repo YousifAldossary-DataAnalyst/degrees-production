@@ -10,7 +10,6 @@ const Page = (props: Props) => {
   return (
     <BlurPage>
     <div className="h-full">
-      Page
       <EditorWorkflowProvider>
         <ConnectionsProvider>
           <EditorCanvas />

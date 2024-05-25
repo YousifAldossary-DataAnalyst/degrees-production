@@ -17,7 +17,7 @@ const Workflows = async (props: Props) => {
             <Workflow
               key={flow.id}
               {...flow}
-              subaccountId={flow.subAccountId}
+              subAccountId={flow.subAccountId}
             />
           ))
         ) : (

@@ -1,6 +1,6 @@
-import { postContentToWebHook } from '@/app/(main)/(pages)/connections/_actions/discord-connection'
-import { onCreateNewPageInDatabase } from '@/app/(main)/(pages)/connections/_actions/notion-connection'
-import { postMessageToSlack } from '@/app/(main)/(pages)/connections/_actions/slack-connection'
+import { postContentToWebHook } from '@/app/(main)/subaccount/[subaccountId]/connections/_actions/discord-connection'
+import { onCreateNewPageInDatabase } from '@/app/(main)/subaccount/[subaccountId]/connections/_actions/notion-connection'
+import { postMessageToSlack } from '@/app/(main)/subaccount/[subaccountId]/connections/_actions/slack-connection'
 import { db } from '@/lib/db'
 import axios from 'axios'
 import { headers } from 'next/headers'
@@ -21,12 +21,12 @@ export async function POST(req: NextRequest) {
       where: {
         googleResourceId: channelResourceId,
       },
-      select: { clerkId: true, credits: true },
+      select: { id: true, credits: true },
     })
     if ((user && parseInt(user.credits!) > 0) || user?.credits == 'Unlimited') {
       const workflow = await db.workflows.findMany({
         where: {
-          userId: user.clerkId,
+          userId: user.id,
         },
       })
       if (workflow) {
@@ -74,6 +74,7 @@ export async function POST(req: NextRequest) {
               flowPath.splice(flowPath[current], 1)
             }
 
+            //WIP: Get Ngrok
             if (flowPath[current] == 'Wait') {
               const res = await axios.put(
                 'https://api.cron-job.org/jobs',
@@ -118,7 +119,7 @@ export async function POST(req: NextRequest) {
 
          await db.user.update({
             where: {
-              clerkId: user.clerkId,
+              id: user.id,
             },
             data: {
               credits: `${parseInt(user.credits!) - 1}`,

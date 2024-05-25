@@ -11,16 +11,16 @@ const WorkflowsPage = (props: Props) => {
   return (
     <BlurPage>
       <div className="flex flex-col relative">
-        <div className="absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
+        {/* <div className="absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
           <Card>
             <CardHeader>
-              <CardTitle>Soon...</CardTitle>
+              <CardTitle>Coming Soon...</CardTitle>
               <CardDescription>
                 Currently under development.
               </CardDescription>
             </CardHeader>
           </Card>
-        </div>
+        </div> */}
       <h1 className="text-4xl sticky top-0 z-[10] p-6 bg-background/50 backdrop-blur-lg flex items-center border-b justify-between">
         Workflows
         <WorkflowButton />

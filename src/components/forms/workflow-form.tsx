@@ -31,8 +31,10 @@ type Props = {
   subTitle?: string
 }
 
+//WIP: Refer to FunnelForm. Creating workflow for each subaccount
 const Workflowform = ({ subTitle, title }: Props) => {
   const { setClose } = useModal()
+  
   const form = useForm<z.infer<typeof WorkflowFormSchema>>({
     mode: 'onChange',
     resolver: zodResolver(WorkflowFormSchema),

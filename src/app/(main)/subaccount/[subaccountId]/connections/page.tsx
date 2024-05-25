@@ -3,13 +3,110 @@ import { CONNECTIONS } from "@/lib/constants";
 import React from "react";
 import ConnectionCard from "./_components/conncetions-card";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { currentUser } from "@clerk/nextjs";
+import { onDiscordConnect } from "./_actions/discord-connection";
+import { onNotionConnect } from "./_actions/notion-connection";
+import { onSlackConnect } from "./_actions/slack-connection";
+import { getUserData } from "./_actions/get-user";
 
 type Props = {
   searchParams?: { [key: string]: string | undefined };
 };
 
-//WIP: CONNECTIONS to be completed
-const ConnectionsPage = (props: Props) => {
+
+const ConnectionsPage = async (props: Props) => {
+  const {
+    webhook_id,
+    webhook_name,
+    webhook_url,
+    guild_id,
+    guild_name,
+    channel_id,
+    access_token,
+    workspace_name,
+    workspace_icon,
+    workspace_id,
+    database_id,
+    app_id,
+    authed_user_id,
+    authed_user_token,
+    slack_access_token,
+    bot_user_id,
+    team_id,
+    team_name,
+  } = props.searchParams ?? {
+    webhook_id: '',
+    webhook_name: '',
+    webhook_url: '',
+    guild_id: '',
+    guild_name: '',
+    channel_id: '',
+    access_token: '',
+    workspace_name: '',
+    workspace_icon: '',
+    workspace_id: '',
+    database_id: '',
+    app_id: '',
+    authed_user_id: '',
+    authed_user_token: '',
+    slack_access_token: '',
+    bot_user_id: '',
+    team_id: '',
+    team_name: '',
+  }
+
+  const user = await currentUser()
+  if (!user) return null
+  
+//3 different calls on user connection
+const onUserConnections = async () => {
+  console.log(database_id)
+  await onDiscordConnect(
+    channel_id!,
+    webhook_id!,
+    webhook_name!,
+    webhook_url!,
+    user.id,
+    guild_name!,
+    guild_id!
+  )
+  await onNotionConnect(
+    access_token!,
+    workspace_id!,
+    workspace_icon!,
+    workspace_name!,
+    database_id!,
+    user.id
+  )
+
+  await onSlackConnect(
+    app_id!,
+    authed_user_id!,
+    authed_user_token!,
+    slack_access_token!,
+    bot_user_id!,
+    team_id!,
+    team_name!,
+    user.id
+  )
+
+  const connections: any = {}
+
+    const user_info = await getUserData(user.id)
+
+    //get user info with all connections
+    user_info?.connections.map((connection) => {
+      connections[connection.type] = true
+      return (connections[connection.type] = true)
+    })
+
+    // Google Drive connection will always be true
+    // as it is given access during the login process
+    return { ...connections, 'Google Drive': true }
+  }
+
+  const connections = await onUserConnections()
+
   return (
     <BlurPage>
       <div className="absolute -top-10 -left-10 right-0 bottom-0 z-30 flex items-center justify-center backdrop-blur-md bg-background/50">
@@ -39,7 +136,7 @@ const ConnectionsPage = (props: Props) => {
                 title={connection.title}
                 icon={connection.image}
                 type={connection.title}
-                // connected={connections}
+                connected={connections}
               />
             ))}
           </section>

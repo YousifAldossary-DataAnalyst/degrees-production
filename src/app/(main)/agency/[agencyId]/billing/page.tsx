@@ -15,12 +15,14 @@ import {
 import clsx from 'clsx'
 import SubscriptionHelper from './_components/subscription-helper'
 import CancelPlans from './_components/cancel-subscription'
+import { currentUser } from '@clerk/nextjs'
 
 type Props = {
   params: { agencyId: string }
 }
 
 const page = async ({ params }: Props) => {
+
   //CHALLENGE : Create the add on  products
   const addOns = await stripe.products.list({
     ids: addOnProducts.map((product) => product.id),
@@ -36,6 +38,23 @@ const page = async ({ params }: Props) => {
       Subscription: true,
     },
   })
+
+  const user = await currentUser()
+
+  if (user && agencySubscription) {
+    await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        tier: agencySubscription.Subscription?.price,
+        credits:
+          agencySubscription.Subscription?.price == '19.99 SAR'
+            ? 'Unlimited'
+            : '10',
+      },
+    })
+  }
 
   const prices = await stripe.prices.list({
     product: process.env.NEXT_DEGREES_PRODUCT_ID,

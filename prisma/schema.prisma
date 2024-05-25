@@ -81,6 +81,8 @@ model User {
   // clerkId      String?  @unique
   localGoogleId    String?  @unique
   googleResourceId String?  @unique
+  credits      String?        @default("10")
+  tier         String?        @default("Free")
   
   LocalGoogleCredential LocalGoogleCredential?
   DiscordWebhook        DiscordWebhook[]
@@ -88,6 +90,7 @@ model User {
   Slack                 Slack[]
   connections           Connections[]
   workflows             Workflows[]
+  
 
   @@index([agencyId])
 }

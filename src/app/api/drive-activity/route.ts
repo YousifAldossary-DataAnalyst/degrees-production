@@ -39,6 +39,7 @@ export async function GET() {
     throw new Error('startPageToken is unexpectedly null')
   }
 
+  //WIP: Get Ngrok
   const listener = await drive.changes.watch({
     pageToken: startPageToken,
     supportsAllDrives: true,
@@ -56,7 +57,7 @@ export async function GET() {
     //if listener created store its channel id in db
     const channelStored = await db.user.updateMany({
       where: {
-        clerkId: userId,
+        id: userId,
       },
       data: {
         googleResourceId: listener.data.resourceId,

@@ -49,6 +49,7 @@ export const onNotionConnect = async (
     }
   }
 }
+
 export const getNotionConnection = async () => {
   const user = await currentUser()
   if (user) {

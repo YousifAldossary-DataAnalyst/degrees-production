@@ -1,8 +1,10 @@
 "use server";
 
+import SubAccountDetails from "@/components/forms/subaccount-details";
 import { Option } from "@/components/ui/multiple-selector";
 import { db } from "@/lib/db";
 import { auth, currentUser } from "@clerk/nextjs";
+import SubaccountPageId from "../../../page";
 
 export const getGoogleListener = async () => {
   const { userId } = auth();
@@ -81,7 +83,7 @@ export const onCreateNodeTemplate = async (
 
       if (channelList) {
         //remove duplicates before insert
-        const NonDuplicated = channelList.slackChannels.filter(
+        const NonDuplicated = channelList.slackChannels?.filter(
           (channel) => channel !== channels![0].value
         );
 
@@ -136,13 +138,15 @@ export const onCreateNodeTemplate = async (
   }
 };
 
+//WIP: Create Workflows separately for each subaccount.
+//You may need to use params to get subaccount.
 export const onGetWorkflows = async () => {
   const user = await currentUser();
   if (user) {
     const workflow = await db.workflows.findMany({
       where: {
         userId: user.id,
-      },
+      }
     });
 
     if (workflow) return workflow;
@@ -161,8 +165,8 @@ export const onCreateWorkflow = async (
     },
   });
 
-  if (user) {
-    //create new workflow
+  if (subaccount && user) {
+    //// WIP: Create Flow for each subaccount
     const workflow = await db.workflows.create({
       data: {
         userId: user.id,
@@ -170,11 +174,14 @@ export const onCreateWorkflow = async (
         description,
         subAccountId: subaccount?.id,
       },
-    });
+    }
+  //console.log(workflow)
+  );
 
     if (workflow) return { message: "workflow created" };
     return { message: "Oops! try again" };
   }
+  
 };
 
 export const onGetNodesEdges = async (flowId: string) => {

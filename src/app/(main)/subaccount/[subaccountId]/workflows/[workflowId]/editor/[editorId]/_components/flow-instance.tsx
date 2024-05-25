@@ -1,4 +1,4 @@
-'use client'
+'use client' 
 import { Button } from '@/components/ui/button'
 import { useNodeConnections } from '@/providers/connections-provider'
 import { usePathname } from 'next/navigation'
@@ -40,7 +40,8 @@ const FlowInstance = ({ children, edges, nodes }: Props) => {
     const flows: any = []
     const connectedEdges = edges.map((edge) => edge.target)
     connectedEdges.map((target) => {
-      nodes.map((node) => {
+      //Switch back to map instead of for each
+      nodes.forEach((node) => {
         if (node.id === target) {
           flows.push(node.type)
         }

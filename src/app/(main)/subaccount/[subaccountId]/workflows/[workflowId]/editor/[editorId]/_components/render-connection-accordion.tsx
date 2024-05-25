@@ -20,7 +20,7 @@ import { CheckIcon, ChevronsUpDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { EditorState } from '@/providers/editor/editor-workfllow-provider'
-import { useDegreesStore } from '../../../../store'
+import { useDegreesStore } from '../../../../../../../../../store'
 import ConnectionCard from '@/app/(main)/subaccount/[subaccountId]/connections/_components/conncetions-card'
 
 const frameworks = [
@@ -41,8 +41,8 @@ const frameworks = [
     label: 'Remix',
   },
   {
-    value: 'astro',
-    label: 'Astro',
+    value: 'degrees',
+    label: 'Degrees',
   },
 ]
 

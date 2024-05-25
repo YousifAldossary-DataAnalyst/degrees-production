@@ -20,11 +20,16 @@ type Props = {
   description: string;
   id: string;
   publish: boolean | null;
-  subaccountId: string;
-  workflowId: string;
+  subAccountId: string;
 };
 
-const Workflow = ({subaccountId, workflowId, description, id, name, publish }: Props) => {
+const Workflow = ({
+  subAccountId,
+  description,
+  id,
+  name,
+  publish,
+}: Props) => {
   const onPublishFlow = async (event: any) => {
     const response = await onFlowPublish(
       id,
@@ -33,18 +38,23 @@ const Workflow = ({subaccountId, workflowId, description, id, name, publish }: P
     if (response) toast.message(response);
   };
 
-  const EditorPageLink= async (subaccountId: string) =>{
-    const subaccount = await db.workflows.findFirst({
-      where: {
-        subAccountId: subaccountId,
-      },})
-  };
+  // WIP: Create Flow for each subaccount
+  // const EditorPageLink = async (subAccountId: string) => {
+  //   const subaccount = await db.subAccount.findUnique({
+  //     where: {
+  //       id: subAccountId,
+  //     },
+  //   })
+  //   if(subaccount){
+  //     return redirect({`/subaccount/${subAccountId}/workflows/${id}/editor/${id}`})
+  //   }
+  // };
 
   //Challenge:
   return (
     <Card className="flex w-full items-center justify-between">
       <CardHeader className="flex flex-col gap-4">
-        <Link href={`/subaccount/${subaccountId}/workflows/${id}/editor/${id}`}>
+        <Link href={`/subaccount/${subAccountId}/workflows/${id}/editor/${id}`}>
           <div className="flex flex-row gap-2">
             <Image
               src="/googleDrive.png"

@@ -36,11 +36,11 @@ export const clients = [...new Array(10)].map((client, index) => ({
 export const pricingCards = [
   {
     title: 'Starter',
-    description: 'Perfect for trying out plura',
+    description: 'Perfect for trying out Degrees',
     price: 'Free',
     duration: '',
     highlight: 'Key features',
-    features: ['3 Sub accounts', '2 Team members', '10 Pipelines', '100 Automations'],
+    features: ['3 Sub accounts', '2 Team members', '10 Pipelines', '10 Automations'],
     priceId: '',
   },
   {
