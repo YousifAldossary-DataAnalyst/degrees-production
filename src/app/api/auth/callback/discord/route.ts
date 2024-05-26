@@ -6,17 +6,6 @@ import url from "url";
 
 //redirect users from one page back to ours
 export async function GET(req: NextRequest) {
-  const {
-    subaccountId,
-  }: {
-    subaccountId: string;
-  } = await req.json();
-
-  const subaccount = await db.subAccount.findUnique({
-    where: { id: subaccountId},
-    include: { Agency: true },
-  });
-
   const code = req.nextUrl.searchParams.get("code");
   if (code) {
     const data = new url.URLSearchParams();
@@ -38,6 +27,17 @@ export async function GET(req: NextRequest) {
         },
       }
     );
+
+    const {
+      subaccountId,
+    }: {
+      subaccountId: string;
+    } = await req.json();
+  
+    const subaccount = await db.subAccount.findUnique({
+      where: { id: subaccountId},
+      include: { Agency: true },
+    });
 
     if (output.data) {
       const access = output.data.access_token;
