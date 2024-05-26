@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
   const subaccountId = await onGetWorkflows();
 
-  let id = subaccountId![16]
+  let id = subaccountId![0]
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
