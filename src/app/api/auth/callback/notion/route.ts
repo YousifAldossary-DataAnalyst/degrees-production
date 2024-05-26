@@ -15,11 +15,13 @@ export async function GET(req: NextRequest) {
       },
     })
     if (subaccount_id) {
+      console.log(subaccount_id)
       return subaccount_id
     }
   };
 
-  const id = await subaccountId()
+  const id = subaccountId()
+  console.log(id)
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
