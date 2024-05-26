@@ -160,7 +160,7 @@ export const onCreateWorkflow = async (
   defaultData?: SubAccount
 ) => {
   const user = await currentUser();
-  const subaccount = await db.subAccount.findFirst({
+  const subaccount = await db.subAccount.findUnique({
     where: {
       id: defaultData?.id,
     },

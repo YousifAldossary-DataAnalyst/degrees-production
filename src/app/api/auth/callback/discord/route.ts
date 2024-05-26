@@ -52,10 +52,10 @@ export async function GET(req: NextRequest) {
       //WIP: Add subaccount path to connections to get the api to redirect back.
 
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/subaccount/ac6310e4-3c29-4f4b-b4a3-341a0982f424/connections?webhook_id=${output.data.webhook.id}&webhook_url=${output.data.webhook.url}&webhook_name=${output.data.webhook.name}&guild_id=${output.data.webhook.guild_id}&guild_name=${UserGuild[0].name}&channel_id=${output.data.webhook.channel_id}`
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/199a4d01-f507-46fb-a2e8-c29a2627a8e7/connections?webhook_id=${output.data.webhook.id}&webhook_url=${output.data.webhook.url}&webhook_name=${output.data.webhook.name}&guild_id=${output.data.webhook.guild_id}&guild_name=${UserGuild[0].name}&channel_id=${output.data.webhook.channel_id}`
       );
     }
 
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/subaccount/ac6310e4-3c29-4f4b-b4a3-341a0982f424/connections`);
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/subaccount/199a4d01-f507-46fb-a2e8-c29a2627a8e7/connections`);
   }
 }
