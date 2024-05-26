@@ -3,23 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
 import { db } from "@/lib/db";
 import { SubAccount } from "@prisma/client";
-import { currentUser } from "@clerk/nextjs";
+//import { currentUser } from "@clerk/nextjs";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
-
-  let subaccountId = async (defaultData?: SubAccount) => {
-    const subaccount_id = await db.subAccount.findFirst({
-      where: {
-        id: defaultData?.id,
-      },
-    });
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_id}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
-    );
-  };
-
-  const id = subaccountId();
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
@@ -59,11 +46,28 @@ export async function GET(req: NextRequest) {
       console.log(databaseId);
 
       //WIP: Add subaccount path to connections to get the api to redirect back.
-
-      return subaccountId()
+      let subaccountId = async (defaultData?: SubAccount) => {
+        const subaccount_id = await db.subAccount.findFirst({
+          where: {
+            id: defaultData?.id,
+          },
+        });
+        return NextResponse.redirect(
+          `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_id}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
+        );
+      };
+      return subaccountId();
     }
   }
-  return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_URL}/subaccount/${id}/connections`
-  );
+  let subaccountId = async (defaultData?: SubAccount) => {
+    const subaccount_id = await db.subAccount.findFirst({
+      where: {
+        id: defaultData?.id,
+      },
+    });
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_id}/connections`
+    );
+  };
+  return subaccountId();
 }
