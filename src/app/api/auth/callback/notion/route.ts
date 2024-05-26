@@ -5,6 +5,19 @@ import { db } from "@/lib/db";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
+
+  const {
+    subaccountId,
+  }: {
+    subaccountId: string;
+  } = await req.json();
+
+  
+    const subaccount = await db.subAccount.findUnique({
+      where: { id: subaccountId },
+      include: { Agency: true },
+    });
+
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
   ).toString("base64");
@@ -45,11 +58,11 @@ export async function GET(req: NextRequest) {
       //WIP: Add subaccount path to connections to get the api to redirect back.
 
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/subaccount/eb866380-2c95-4654-80bd-225ddaa39fa0/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
       );
     }
   }
   return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_URL}/subaccount/eb866380-2c95-4654-80bd-225ddaa39fa0/connections`
+    `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount}/connections`
   );
 }
