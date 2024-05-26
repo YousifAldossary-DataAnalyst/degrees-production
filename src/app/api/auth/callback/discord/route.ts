@@ -29,12 +29,14 @@ export async function GET(req: NextRequest) {
 
     console.log(data);
 
-    // const subaccountId = '';
+    let subaccountId =''
+
+    console.log(subaccountId);
   
-    // const subaccount = await db.subAccount.findUnique({
-    //   where: { id: subaccountId },
-    //   include: { Agency: true },
-    // });
+    const subaccount = await db.subAccount.findUnique({
+      where: { id: subaccountId },
+      include: { Agency: true },
+    });
 
     if (output.data) {
       const access = output.data.access_token;

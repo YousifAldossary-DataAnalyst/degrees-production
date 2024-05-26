@@ -10,14 +10,12 @@ export async function GET(req: NextRequest) {
     return new NextResponse('Code not provided', { status: 400 })
   }
 
-  const {
-    subaccountId,
-  }: {
-    subaccountId: string;
-  } = await req.json();
+  let subaccountId =''
+
+  console.log(subaccountId);
 
   const subaccount = await db.subAccount.findUnique({
-    where: { id: subaccountId},
+    where: { id: subaccountId },
     include: { Agency: true },
   });
 
