@@ -12,11 +12,15 @@ export async function GET(req: NextRequest) {
 
   const user = await currentUser();
 
+  console.log(user)
+
   const subaccount_Id = await db.workflows.findFirst(({
     where: {
       userId: user?.id
     }
   }))
+
+  console.log(subaccount_Id)
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
