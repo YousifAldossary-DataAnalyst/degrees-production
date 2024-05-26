@@ -9,14 +9,15 @@ export async function GET(req: NextRequest) {
   const {
     subaccountId,
   }: {
-    subaccountId: string;
+    subaccountId: any;
   } = await req.json();
 
-  
-    const subaccount = await db.subAccount.findUnique({
-      where: { id: subaccountId },
-      include: { Agency: true },
-    });
+  console.log(subaccountId);
+
+  const subaccount = await db.subAccount.findUnique({
+    where: { id: subaccountId },
+    include: { Agency: true },
+  });
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
