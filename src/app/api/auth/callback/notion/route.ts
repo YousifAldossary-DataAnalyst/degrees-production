@@ -1,27 +1,20 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
-import { onGetWorkflows } from "@/app/(main)/subaccount/[subaccountId]/workflows/[workflowId]/_actions/workflow-connections";
 import { db } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
 
-  console.log(code)
-
-  const user = await currentUser();
-
-  const subaccount_Id = await db.workflows.findFirst(({
-    where: {
-      userId: user?.id
-    }
-  }))
-
+  console.log(code);
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
   ).toString("base64");
+
+  console.log(encoded);
+
   if (code) {
     const response = await axios("https://api.notion.com/v1/oauth/token", {
       method: "POST",
@@ -57,12 +50,35 @@ export async function GET(req: NextRequest) {
       console.log(databaseId);
 
       //WIP: Add subaccount path to connections to get the api to redirect back.
+      console.log(code);
+
+      const user = await currentUser();
+      console.log(user);
+
+      const subaccount_Id = await db.workflows.findFirst({
+        where: {
+          userId: user?.id,
+        },
+      });
+
+      console.log(subaccount_Id);
 
       return NextResponse.redirect(
         `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_Id?.subAccountId}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
       );
     }
   }
+  const user = await currentUser();
+  console.log(user);
+
+  const subaccount_Id = await db.workflows.findFirst({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  console.log(subaccount_Id);
+  
   return NextResponse.redirect(
     `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_Id?.subAccountId}/connections`
   );
