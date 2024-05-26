@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
 
   const subaccountId = async (defaultData?: SubAccount) => {
-    const subaccount_id = await db.subAccount.findUnique({
+    const subaccount_id = await db.subAccount.findFirst({
       where: {
         id: defaultData?.id,
       },
