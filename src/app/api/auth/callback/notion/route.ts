@@ -1,9 +1,10 @@
-'use server'
+"use server";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
 import { db } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
+import { any } from "zod";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
@@ -12,15 +13,11 @@ export async function GET(req: NextRequest) {
 
   const user = await currentUser();
 
-  console.log(user)
-
   const subaccount_Id = await db.workflows.findFirst(({
     where: {
       userId: user?.id
     }
   }))
-
-  console.log(subaccount_Id)
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
