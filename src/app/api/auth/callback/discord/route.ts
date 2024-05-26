@@ -27,6 +27,8 @@ export async function GET(req: NextRequest) {
       }
     );
 
+    console.log(data);
+
     // const subaccountId = '';
   
     // const subaccount = await db.subAccount.findUnique({
