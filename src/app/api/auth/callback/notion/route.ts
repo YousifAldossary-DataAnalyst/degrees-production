@@ -8,9 +8,7 @@ export async function GET(req: NextRequest) {
 
   const subaccountId = await onGetWorkflows();
 
-  let id = subaccountId?.filter(
-    (channel: { subAccountId: string }) => channel == subaccountId![16]
-  );
+  let id = subaccountId![16]
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
@@ -52,11 +50,11 @@ export async function GET(req: NextRequest) {
       //WIP: Add subaccount path to connections to get the api to redirect back.
 
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccountId![16]}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/${id.subAccountId}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
       );
     }
   }
   return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccountId![16]}/connections`
+    `${process.env.NEXT_PUBLIC_URL}/subaccount/${id.subAccountId}/connections`
   );
 }
