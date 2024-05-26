@@ -6,11 +6,7 @@ import { db } from "@/lib/db";
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
 
-  const {
-    subaccountId,
-  }: {
-    subaccountId: any;
-  } = await req.json();
+  let subaccountId =''
 
   console.log(subaccountId);
 
