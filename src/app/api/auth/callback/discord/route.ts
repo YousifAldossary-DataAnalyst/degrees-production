@@ -1,3 +1,4 @@
+import { db } from "@/lib/db";
 import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
 import url from "url";
@@ -5,6 +6,17 @@ import url from "url";
 
 //redirect users from one page back to ours
 export async function GET(req: NextRequest) {
+  const {
+    subaccountId,
+  }: {
+    subaccountId: string;
+  } = await req.json();
+
+  const subaccount = await db.subAccount.findUnique({
+    where: { id: subaccountId},
+    include: { Agency: true },
+  });
+
   const code = req.nextUrl.searchParams.get("code");
   if (code) {
     const data = new url.URLSearchParams();
@@ -42,11 +54,13 @@ export async function GET(req: NextRequest) {
         (guild: any) => guild.id == output.data.webhook.guild_id
       );
 
+      //WIP: Add subaccount path to connections to get the api to redirect back.
+
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/connections?webhook_id=${output.data.webhook.id}&webhook_url=${output.data.webhook.url}&webhook_name=${output.data.webhook.name}&guild_id=${output.data.webhook.guild_id}&guild_name=${UserGuild[0].name}&channel_id=${output.data.webhook.channel_id}`
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount?.id}/connections?webhook_id=${output.data.webhook.id}&webhook_url=${output.data.webhook.url}&webhook_name=${output.data.webhook.name}&guild_id=${output.data.webhook.guild_id}&guild_name=${UserGuild[0].name}&channel_id=${output.data.webhook.channel_id}`
       );
     }
 
-    return NextResponse.redirect("https://localhost:3000/connections");
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount?.id}/connections`);
   }
 }

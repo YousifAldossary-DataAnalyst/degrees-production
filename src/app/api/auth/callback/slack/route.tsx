@@ -1,3 +1,4 @@
+import { db } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
@@ -8,6 +9,17 @@ export async function GET(req: NextRequest) {
   if (!code) {
     return new NextResponse('Code not provided', { status: 400 })
   }
+
+  const {
+    subaccountId,
+  }: {
+    subaccountId: string;
+  } = await req.json();
+
+  const subaccount = await db.subAccount.findUnique({
+    where: { id: subaccountId},
+    include: { Agency: true },
+  });
 
   try {
     // Make a POST request to Slack's OAuth endpoint to exchange the code for an access token
@@ -40,9 +52,11 @@ export async function GET(req: NextRequest) {
       const teamId = data?.team?.id
       const teamName = data?.team?.name
 
+      //WIP: Add subaccount path to connections to get the api to redirect back.
+
       // Handle the successful OAuth flow and redirect the user
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/connections?app_id=${appId}&authed_user_id=${userId}&authed_user_token=${userToken}&slack_access_token=${accessToken}&bot_user_id=${botUserId}&team_id=${teamId}&team_name=${teamName}`
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount?.id}/connections?app_id=${appId}&authed_user_id=${userId}&authed_user_token=${userToken}&slack_access_token=${accessToken}&bot_user_id=${botUserId}&team_id=${teamId}&team_name=${teamName}`
       )
     }
   } catch (error) {
