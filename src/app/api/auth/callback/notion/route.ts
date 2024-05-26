@@ -7,7 +7,10 @@ import { db } from "@/lib/db";
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
 
+  console.log(code)
+  
   let id = await req.json()
+  console.log(id)
   const subaccount_Id = await db.subAccount.findFirst(({
     where: {
       id: id
