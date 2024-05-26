@@ -1,12 +1,16 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
-import { db } from "@/lib/db";
-import { SubAccount } from "@prisma/client";
-//import { currentUser } from "@clerk/nextjs";
+import { onGetWorkflows } from "@/app/(main)/subaccount/[subaccountId]/workflows/[workflowId]/_actions/workflow-connections";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
+
+  const subaccountId = await onGetWorkflows();
+
+  let id = subaccountId?.filter(
+    (channel: { subAccountId: string }) => channel == subaccountId![16]
+  );
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
@@ -46,28 +50,13 @@ export async function GET(req: NextRequest) {
       console.log(databaseId);
 
       //WIP: Add subaccount path to connections to get the api to redirect back.
-      let subaccountId = async (defaultData?: SubAccount) => {
-        const subaccount_id = await db.subAccount.findFirst({
-          where: {
-            id: defaultData?.id,
-          },
-        });
-        return NextResponse.redirect(
-          `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_id}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
-        );
-      };
-      return subaccountId();
+
+      return NextResponse.redirect(
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccountId![16]}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
+      );
     }
   }
-  let subaccountId = async (defaultData?: SubAccount) => {
-    const subaccount_id = await db.subAccount.findFirst({
-      where: {
-        id: defaultData?.id,
-      },
-    });
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_id}/connections`
-    );
-  };
-  return subaccountId();
+  return NextResponse.redirect(
+    `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccountId![16]}/connections`
+  );
 }
