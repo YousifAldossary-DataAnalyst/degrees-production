@@ -6,8 +6,8 @@ import { db } from "@/lib/db";
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
 
-  let subaccountId =''
-
+  let subaccountId = ''
+  
   console.log(subaccountId);
 
   const subaccount = await db.subAccount.findUnique({
@@ -55,11 +55,11 @@ export async function GET(req: NextRequest) {
       //WIP: Add subaccount path to connections to get the api to redirect back.
 
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount?.id}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
       );
     }
   }
   return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount}/connections`
+    `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount?.id}/connections`
   );
 }
