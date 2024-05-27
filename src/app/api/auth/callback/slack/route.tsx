@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse('Code not provided', { status: 400 })
   }
 
-  let subaccountId =''
+  let subaccountId = ''
 
   console.log(subaccountId);
 
@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
 
       // Handle the successful OAuth flow and redirect the user
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount?.id}/connections?app_id=${appId}&authed_user_id=${userId}&authed_user_token=${userToken}&slack_access_token=${accessToken}&bot_user_id=${botUserId}&team_id=${teamId}&team_name=${teamName}`
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/1c2d80cd-46f3-47ff-8539-60d9f9d1974d/connections?app_id=${appId}&authed_user_id=${userId}&authed_user_token=${userToken}&slack_access_token=${accessToken}&bot_user_id=${botUserId}&team_id=${teamId}&team_name=${teamName}`
       )
     }
   } catch (error) {

@@ -7,9 +7,6 @@ import { currentUser } from "@clerk/nextjs";
 import { any } from "zod";
 
 export async function GET(req: NextRequest) {
-  const code = req.nextUrl.searchParams.get("code");
-
-  console.log(code);
 
   const user = await currentUser();
 
@@ -20,6 +17,8 @@ export async function GET(req: NextRequest) {
       },
     }),
   ]);
+
+  const code = req.nextUrl.searchParams.get("code");
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
