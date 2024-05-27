@@ -9,15 +9,17 @@ import { any } from "zod";
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
 
-  console.log(code)
+  console.log(code);
 
   const user = await currentUser();
 
-  const subaccount_Id = await db.workflows.findFirst(({
-    where: {
-      userId: user?.id
-    }
-  }))
+  const [subaccount_Id] = await Promise.all([
+    db.workflows.findFirst({
+      where: {
+        userId: user?.id,
+      },
+    }),
+  ]);
 
   const encoded = Buffer.from(
     `${process.env.NOTION_CLIENT_ID}:${process.env.NOTION_API_SECRET}`
