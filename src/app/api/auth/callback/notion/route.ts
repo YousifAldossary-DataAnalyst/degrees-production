@@ -8,7 +8,7 @@ import { any } from "zod";
 import { SubAccount } from "@prisma/client";
 
 
-export const getSubaccountId = async () => {
+export async function getSubaccountId() {
   const user = await currentUser();
   const subaccount_Id = await db.workflows.findFirst({
     where: {
