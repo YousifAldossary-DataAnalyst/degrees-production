@@ -5,18 +5,26 @@ import { Client } from "@notionhq/client";
 import { db } from "@/lib/db";
 import { currentUser } from "@clerk/nextjs";
 import { any } from "zod";
+import { SubAccount } from "@prisma/client";
+
+
+export const getSubaccountId = async () => {
+  const user = await currentUser();
+  const subaccount_Id = await db.workflows.findFirst({
+    where: {
+      userId: user?.id,
+    },
+    select: {
+      subAccountId: true
+    }
+  });
+
+  return subaccount_Id?.subAccountId;
+}
 
 export async function GET(req: NextRequest) {
 
-  const user = await currentUser();
-
-  const [subaccount_Id] = await Promise.all([
-    db.workflows.findFirst({
-      where: {
-        userId: user?.id,
-      },
-    }),
-  ]);
+  const subaccount_id = await getSubaccountId();
 
   const code = req.nextUrl.searchParams.get("code");
 
@@ -60,11 +68,11 @@ export async function GET(req: NextRequest) {
       //WIP: Add subaccount path to connections to get the api to redirect back.
 
       return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_Id?.subAccountId}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
+        `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_id}/connections?access_token=${response.data.access_token}&workspace_name=${response.data.workspace_name}&workspace_icon=${response.data.workspace_icon}&workspace_id=${response.data.workspace_id}&database_id=${databaseId}`
       );
     }
   }
   return NextResponse.redirect(
-    `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_Id?.subAccountId}/connections`
+    `${process.env.NEXT_PUBLIC_URL}/subaccount/${subaccount_id}/connections`
   );
 }
